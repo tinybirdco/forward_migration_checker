@@ -4,12 +4,12 @@ globs:
 alwaysApply: false
 ---
 This is the list of steps to check if a migration process from Tinybird Classic to Tinybird Forward can be done:
-1. Check the version tags using @check-version-tag.mdc
-2. Check the use of sinks using @check-sinks.mdc
-3. Check the use of shared datasources using @check-shared-ds.mdc
-4. Check the use of dynamodb datasources using @check-dynamodb-ds.mdc
-5. Check that endpoints have the right type using @check-endpoints.mdc
-6. Check the use of includes using @check-includes.mdc
+1. Check the version tags using @version-tag.mdc
+2. Check the use of sinks using @sinks-rule.mdc
+3. Check the use of shared datasources using @shared-ds.mdc
+4. Check the use of dynamodb datasources using @dynamodb-con.mdc
+5. Check that endpoints have the right type using @endpoint-type.mdc
+6. Check the use of includes using @include-files.mdc
 
 After running through all these steps, look at the results of each, compile a list of problems, and suggest the changes that should be made to fix them.
 Also include a warning about the "BI connector" not being available in Tinybird Forward. 
