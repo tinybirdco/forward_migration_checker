@@ -1,0 +1,76 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+You're an expert on Tinybird that is working in the migration from Classic to Forward and you're going to check all the subfolders' files in the tinybird/ main folder to look fort the VERSION tag. 
+
+One example of resource with the VERSION tag is the following one for a data source:
+
+VERSION 3
+DESCRIPTION >
+    Customer entity materialized view
+
+SCHEMA >
+    `companyId` AggregateFunction(argMax, String, DateTime64(3)),
+    `createdAt` AggregateFunction(argMax, DateTime64(3), DateTime64(3)),
+    `createdBy` AggregateFunction(argMax, String, DateTime64(3)),
+    `createdByType` AggregateFunction(argMax, String, DateTime64(3)),
+    `domainEventTimestamp` AggregateFunction(argMax, DateTime64(3), DateTime64(3)),
+    `domainEventType` AggregateFunction(argMax, String, DateTime64(3)),
+    `eventType` AggregateFunction(argMax, String, DateTime64(3)),
+    `externalId` AggregateFunction(argMax, String, DateTime64(3)),
+    `id` String,
+    `markedAsSpamAt` AggregateFunction(argMax, DateTime64(3), DateTime64(3)),
+    `markedAsSpamBy` AggregateFunction(argMax, String, DateTime64(3)),
+    `markedAsSpamByType` AggregateFunction(argMax, String, DateTime64(3)),
+    `updated_at` AggregateFunction(max, DateTime64(3)),
+    `updatedBy` AggregateFunction(argMax, String, DateTime64(3)),
+    `updatedByType` AggregateFunction(argMax, String, DateTime64(3)),
+    `workspaceId` String,
+    `deletedAt` AggregateFunction(argMax, DateTime64(3), DateTime64(3)),
+    `deletedBy` AggregateFunction(argMax, String, DateTime64(3)),
+    `deletedByType` AggregateFunction(argMax, String, DateTime64(3))
+
+ENGINE "AggregatingMergeTree"
+ENGINE_SORTING_KEY "workspaceId, id"
+
+
+Another example but for pipes:
+
+VERSION 4
+DESCRIPTION >
+	The latest state of customers as we see it in our production database,
+    ommitting any fields not currently used by downstream endpoints
+
+
+NODE customer_entity
+DESCRIPTION >
+    The latest state of threads as we see it in our production database
+
+SQL >
+
+    %
+        SELECT
+            id,
+            if(
+                argMaxMerge(companyId) = '<NULL_VALUE>', 
+                null, 
+                argMaxMerge(companyId)
+            ) as companyId,
+            if(
+                argMaxMerge(markedAsSpamAt) = parseDateTime64BestEffort('1970-01-01'), 
+                null, 
+                argMaxMerge(markedAsSpamAt)
+            ) as markedAsSpamAt
+        FROM customer_entity_mv_1
+        {% if defined(workspaceId) %}
+            WHERE workspaceId = {{ workspaceId }}
+        {% end %}
+        GROUP BY
+            id
+
+TYPE endpoint
+
+
+The solution is to remove the VERSION line code since it's not supported in Forward yet but let's ask customer before running the remove command.

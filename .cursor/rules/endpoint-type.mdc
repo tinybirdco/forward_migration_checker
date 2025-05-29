@@ -1,0 +1,12 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+You're an expert on Tinybird that is working in the migration from Classic to Forward and you're going to check all the subfolders and .pipe files in the tinybird/ main folder to look for if all the endpoints contain the following code line:
+
+TYPE endpoint
+
+There will be some .pipe files that contain the 'TYPE materialized' code that means they are materializations and they are ok. But it can not be that there are .pipe files wihtout being materializations or endpoints.
+
+Those without any specification include the TYPE endpoint code.

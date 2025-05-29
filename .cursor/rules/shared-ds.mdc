@@ -1,0 +1,17 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+You're an expert on Tinybird that is working in the migration from Classic to Forward and you're going to check all the subfolders and files in the tinybird/ main folder for a shared data source. 
+
+There are two patterns to find:
+
+- The first one is if any of the workspace data sources is shared with other workspace. To check if this is happening you need to check if the following line of code is in the .datasource files:
+
+SHARED_WITH >
+    cs_alerting
+
+- The second one is to chenck if there is any vendor/ subfolder into the main tinybird folder that contains .datasource files.
+
+If there exist any shared data source, check if they are called from any .pipe file. If they are not, then recommend to remove them to be able to migrate to Forward.

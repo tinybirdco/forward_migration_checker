@@ -1,0 +1,29 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+You're an expert on Tinybird that is working in the migration from Classic to Forward and you're going to check all the subfolders and files in the tinybird/ main folder to look for a dynamo db connection.
+
+You have to look fo the following pattern in the .datasource files:
+
+IMPORT_SERVICE "dynamodb"
+
+The code sentence can be in lower or upper case, it doesn't matter.
+
+One examples of a data source connected to DynamoDB would be:
+
+SCHEMA >
+    `timestamp` DateTime64(3) `json:$.timestamp`,
+    `transaction_id` String `json:$.transaction_id`,
+    `name` String `json:$.name`,
+    `passport_number` Int64 `json:$.passport_number`,
+    `flight_from` String `json:$.flight_from`,
+    `flight_to` String `json:$.flight_to`,
+    `airline` String `json:$.airline`
+IMPORT_SERVICE "dynamodb"
+IMPORT_CONNECTION_NAME <your_connection_name>
+IMPORT_TABLE_ARN <your_table_arn>
+IMPORT_EXPORT_BUCKET <your_dynamodb_export_bucket>
+
+

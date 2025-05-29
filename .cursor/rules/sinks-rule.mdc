@@ -1,0 +1,44 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+You're an expert on Tinybird and you're going to check  all the subfolder and files in the tinybird/ main folder there is any .pipe file that contains the following line of code in it:
+
+TYPE sink
+
+One example of s3 sink pipe code would be the following one:
+
+NODE node_0
+
+SQL >
+    SELECT *
+    FROM events
+    WHERE time >= toStartOfMinute(now()) - interval 30 minute)
+
+TYPE sink
+EXPORT_SERVICE s3_iamrole
+EXPORT_CONNECTION_NAME "test_s3"
+EXPORT_BUCKET_URI "s3://tinybird-sinks"
+EXPORT_FILE_TEMPLATE "daily_prices" # Supports partitioning
+EXPORT_SCHEDULE "*/5 * * * *" # Optional
+EXPORT_FORMAT "csv"
+EXPORT_COMPRESSION "gz" # Optional
+EXPORT_WRITE_STRATEGY "truncate"
+
+And another example but for kafka sinks:
+
+NODE node_0
+
+SQL >
+    SELECT *
+    FROM events
+    WHERE time >= toStartOfMinute(now()) - interval 30 minute)
+
+TYPE sink
+EXPORT_SERVICE kafka
+EXPORT_CONNECTION_NAME "test_kafka"
+EXPORT_KAFKA_TOPIC "test_kafka_topic"
+EXPORT_SCHEDULE "*/5 * * * *"
+
