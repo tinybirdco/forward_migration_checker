@@ -1,0 +1,13 @@
+SCHEMA >
+    `timestamp` DateTime64(3) `json:$.timestamp`,
+    `transaction_id` String `json:$.transaction_id`,
+    `name` String `json:$.name`,
+    `passport_number` Int64 `json:$.passport_number`,
+    `flight_from` String `json:$.flight_from`,
+    `flight_to` String `json:$.flight_to`,
+    `airline` String `json:$.airline`
+
+IMPORT_SERVICE "dynamodb"
+IMPORT_CONNECTION_NAME my_dynamodb_connection
+IMPORT_TABLE_ARN arn:aws:dynamodb:us-east-1:123456789012:table/my-table
+IMPORT_EXPORT_BUCKET my-dynamodb-export-bucket 

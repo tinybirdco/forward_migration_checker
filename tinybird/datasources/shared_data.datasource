@@ -1,0 +1,11 @@
+SCHEMA >
+    `id` String,
+    `value` Float64,
+    `created_at` DateTime
+
+SHARED_WITH >
+    cs_alerting
+
+ENGINE MergeTree
+ENGINE_PARTITION_KEY toYYYYMM(created_at)
+ENGINE_SORTING_KEY id 

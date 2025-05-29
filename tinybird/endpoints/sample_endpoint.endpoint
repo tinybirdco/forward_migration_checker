@@ -1,0 +1,12 @@
+NODE endpoint
+DESCRIPTION >
+    Sample endpoint for testing
+
+SQL >
+    SELECT 
+        airline,
+        count() as flight_count
+    FROM sample_data
+    WHERE timestamp >= now() - interval 1 day
+    GROUP BY airline
+    ORDER BY flight_count DESC 

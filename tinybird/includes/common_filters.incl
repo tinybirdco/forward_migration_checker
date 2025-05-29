@@ -1,0 +1,8 @@
+-- Common filters used across multiple pipes and endpoints
+
+-- Date range filter
+WHERE timestamp >= {{DateTime(start_date, '2023-01-01')}}
+AND timestamp < {{DateTime(end_date, '2023-12-31')}}
+
+-- Active records only
+AND status = 'active' 

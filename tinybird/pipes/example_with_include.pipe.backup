@@ -1,0 +1,17 @@
+NODE filtered_data
+
+SQL >
+    SELECT *
+    FROM sample_data
+    # COMMENTED OUT FOR FORWARD MIGRATION: INCLUDE "includes/common_filters.incl"
+    ORDER BY timestamp DESC
+
+NODE final_output
+
+SQL >
+    SELECT 
+        airline,
+        count() as flight_count,
+        avg(passport_number) as avg_passport
+    FROM filtered_data
+    GROUP BY airline 
