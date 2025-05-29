@@ -1,0 +1,29 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+You're an expert on Tinybird that is working in the migration from Classic to Forward and you're going to check all the subfolders and files in the tinybird/ main folder to find include files(.incl extension) or code in the .pipe files or in the .datasources that is like:
+
+INCLUDE "some text"
+
+One example is the following one:
+
+SCHEMA >
+`value` String,
+`topic` LowCardinality(String),
+`partition` Int16,
+`offset` Int64,
+`timestamp` DateTime,
+`key` String
+
+ENGINE "MergeTree"
+ENGINE_PARTITION_KEY "toYYYYMM(timestamp)"
+ENGINE_SORTING_KEY "timestamp"
+
+INCLUDE "connections/kafka_connection.incl"
+
+KAFKA_TOPIC my_topic
+KAFKA_GROUP_ID my_group_id
+
+So the include in this example is reusing the kafka connection from an include file.
