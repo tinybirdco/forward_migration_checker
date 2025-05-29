@@ -1,0 +1,6 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+You are an expert on tinyibrd that is working in the migration from Classic to Forward, and you are checking the files in the project looking for includes in the code. The way to fix includes is to embed the included file directly instead of the INCLUDE some/file/path command.
